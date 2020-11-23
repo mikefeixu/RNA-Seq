@@ -1,0 +1,5 @@
+SampleID	condition	batch
+MD5-R-EB	WTDAY3	
+MD6-R-EB	WTDAY3	
+MD7-R-EB	KODAY3	
+MD8-R-EB	KODAY3	
