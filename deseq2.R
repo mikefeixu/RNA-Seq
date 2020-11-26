@@ -4,14 +4,14 @@ library(DESeq2)
 library(gtools)
 library(dplyr)
 
-setwd("C:/Users/mikef/Dropbox (EinsteinMed)/RNA-Seq/WTDAY0-vs-KODAY0")
+setwd("C:/Users/Fei/Dropbox (EinsteinMed)/RNA-Seq/WTDAY0-vs-KODAY0")
 directory <- getwd()
 
 comparison = "WTDAY0-vs-KODAY0"
 refCond = sub("-vs-(.*)$", "", comparison)
 FC = 0
 negFC = FC*(-1)
-pvalue = 0.05
+Pvalue = 0.05
 pvaluetype = "padj"
 
 conditionfile <- "Conditions.txt"
@@ -67,10 +67,10 @@ resOrdered <- res[order(res$padj),]
 write.csv(as.data.frame(resOrdered), file="rawDEGs.csv")
 
 
-SigDEGs <- subset(resOrdered, eval(as.name(pvaluetype)) < pvalue & abs(log2FoldChange) > FC)
+SigDEGs <- subset(resOrdered, eval(as.name(pvaluetype)) < Pvalue & abs(log2FoldChange) > FC)
 write.csv(as.data.frame(SigDEGs), file="rawSigDEGs.csv")
-SigDEGsUp <- subset(resOrdered, eval(as.name(pvaluetype)) < pvalue & (log2FoldChange) > FC)
-SigDEGsDown <- subset(resOrdered, eval(as.name(pvaluetype)) < pvalue & (log2FoldChange) < negFC)
+SigDEGsUp <- subset(resOrdered, eval(as.name(pvaluetype)) < Pvalue & (log2FoldChange) > FC)
+SigDEGsDown <- subset(resOrdered, eval(as.name(pvaluetype)) < Pvalue & (log2FoldChange) < negFC)
 
 SigDEGsList <- SigDEGs[0]
 write.table(as.data.frame(SigDEGsList), "SigDEGsList.tsv", quote=FALSE, col.names=FALSE, sep="\t")

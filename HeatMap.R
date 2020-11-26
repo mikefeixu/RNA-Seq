@@ -1,12 +1,12 @@
 library(pheatmap)
-library(heatmaply)
+#library(heatmaply)
 
 #if (!requireNamespace("BiocManager", quietly = TRUE))
 #  install.packages("BiocManager")
 
 #BiocManager::install("ComplexHeatmap")
 
-library(ComplexHeatmap)
+#library(ComplexHeatmap)
 
 setwd("C:/Users/mikef/Dropbox (EinsteinMed)/RNA-Seq/")
 directory <- getwd()
@@ -20,14 +20,9 @@ day3<- day3$ID
 day6<- read.csv("WTDAY6-vs-KODAY6/SigDEGs.csv",header = T)
 day6<- day6$ID
 
-common <- intersect(intersect(day0, day3),day6)
-common <- day6
+common <- union(union(day0, day3),day6)
+#common <- day6
 
-
-# common <- common[common != "Tmsb10" & common != "Myh9"
-#                  & common != "Lgals1" & common != "Acsl4"
-#                  & common != "Tpm1" & common != "Dsp"
-#                  & common != "Gm21411" & common != "Erf"]
 write.csv(common, "common.csv", row.names = F)
 
 
@@ -49,9 +44,6 @@ CommonTPMCounts <- TPMCounts[TPMCounts$ID %in% commonDEGs,]
 rownames(CommonTPMCounts) <- CommonTPMCounts$ID
 CommonTPMCounts <- CommonTPMCounts[,-1]
 #CommonTPMCounts <- CommonTPMCounts[,c(2,6,7,8,9,10,11,12,13,3,4,5)]
-# colnames(CommonTPMCounts) <- c("Day0 WT-1", "Day0 WT-2","Day0 KO-1","Day0 KO-2",
-#                                "Day3 WT-1", "Day3 WT-2","Day3 KO-1","Day3 KO-2",
-#                                "Day6 WT-1", "Day6 WT-2","Day6 KO-1","Day6 KO-2")
 annotation_col <-data.frame(c("Day0", "Day0","Day0","Day0",
                               "Day3", "Day3","Day3","Day3",
                               "Day6", "Day6","Day6","Day6"),
@@ -80,11 +72,7 @@ selected <- c("Pax6","Oct2","Fgf5","Nestin","Cxxc5",
 
 write.csv(selected, "selected.csv", row.names = F)
 
-
-
-
 day6<- read.csv("WTDAY6-vs-KODAY6/SigDEGs.csv",header = T)
-#day6<- day6[day6$ID %in% selected,]
 
 NormalizedCounts = read.table("WTDAY6-vs-KODAY6/normalizedCounts.csv",header=T,sep=",",check.names=FALSE, quote = "\"")
 colnames(NormalizedCounts)[1] = "ID"

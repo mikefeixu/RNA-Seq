@@ -22,6 +22,7 @@ df <- data.frame(DAY = c("Day 0","Day 3","Day 6"),
                  Up = c(day0Up, day3Up, day6Up), 
                  Down= c(day0Down, day3Down, day6Down))
 
+png(file = "BarPlot.png", width = 1600, height = 1600, units = "px", res = 300)
 par(mar = c(6.1, 4.1, 4.1, 4.1), # change the margins
     lwd = 2, # increase the line thickness
     cex.axis = 1.2 # increase default axis label size
@@ -58,7 +59,7 @@ legend("topleft", legend = c("Down","Up" ) ,
        col = c(rgb(0.0,0.0,1.0,1.0), rgb(1.0,0.0,0.0,1.0)) , 
        bty = "n", pch=15 , pt.cex = 2, cex = 1.2, horiz = FALSE, inset = c(0.05, 0.05))
 
-
+dev.off()
 
 # ## Draw y-axis.
 # axis(side = 2,
