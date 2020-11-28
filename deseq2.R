@@ -4,11 +4,12 @@ library(DESeq2)
 library(gtools)
 library(dplyr)
 
-setwd("C:/Users/Fei/Dropbox (EinsteinMed)/RNA-Seq/WTDAY0-vs-KODAY0")
+setwd("C:/Users/mikef/Dropbox (EinsteinMed)/Fei/Reverse/WTDAY0-vs-KODAY0")
 directory <- getwd()
 
-comparison = "WTDAY0-vs-KODAY0"
-refCond = sub("-vs-(.*)$", "", comparison)
+#comparison = "WTDAY0-vs-KODAY0"
+#refCond = sub("-vs-(.*)$", "", comparison)
+selectedCond = c("condition", "KODAY0", "WTDAY0")
 FC = 0
 negFC = FC*(-1)
 Pvalue = 0.05
@@ -25,6 +26,7 @@ sample_amount <- nrow(myCond)
 countFiles <- grep("*.counts.txt",list.files(directory),value=TRUE)
 sampleNames <- sub(".counts.txt","",countFiles)
 countFiles <- countFiles[mixedorder(sampleNames),drop=FALSE]
+sampleNames <- sub(".counts.txt","",countFiles)
 
 countData <- read.table(countFiles[1], row.names=1, check.names=FALSE, quote="\"", fill=TRUE, header=TRUE, sep="\t")
 countData <- countData[, 5:ncol(countData), drop=FALSE]
@@ -50,11 +52,12 @@ if (anyNA(myCond$batch)){
   dds = DESeqDataSetFromMatrix(countMatrix, myCond, design = ~ batch + condition)
 }
 
-dds$condition <- relevel(dds$condition, ref=refCond)
+#dds$condition <- relevel(dds$condition, ref=refCond)
 dds <- dds[rowSums(counts(dds)) > 10 * dim(myCond)[1]]
 
 dds <- DESeq(dds)
-res <- results(dds, alpha = 0.1)
+#res <- results(dds)
+res <- results(dds, contrast=selectedCond)
 res <- res[complete.cases(res),]
 res
 

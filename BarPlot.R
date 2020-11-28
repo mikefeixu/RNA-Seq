@@ -3,7 +3,7 @@
 #devtools::install_github("kassambara/easyGgplot2", force = TRUE)
 library(easyGgplot2)
 
-setwd("C:/Users/mikef/Dropbox (EinsteinMed)/RNA-Seq/")
+setwd("C:/Users/mikef/Dropbox (EinsteinMed)/Fei/Reverse/")
 directory <- getwd()
 
 day0<- read.csv("WTDAY0-vs-KODAY0/SigDEGs.csv",header = T)
@@ -34,7 +34,7 @@ par(mar = c(6.1, 4.1, 4.1, 4.1), # change the margins
 my_bar <- barplot(cbind(Down, Up) ~ DAY, data = df, border="black", width=c(1,1,1),
                   las=0 , 
                   col=c(rgb(0.0,0.0,1.0,1.0), rgb(1.0,0.0,0.0,1.0)), 
-                  ylim=c(0,2500), 
+                  ylim=c(0,5000), 
                   space=0.3,
                   axes=T,
                   axisnames=T,
