@@ -1,4 +1,6 @@
-setwd("C:/Users/mikef/Dropbox (EinsteinMed)/RNA-Seq/")
+library(vennerable)
+
+setwd("C:/Users/Fei/Dropbox (EinsteinMed)/Fei/Qin-None-Stranded/")
 directory <- getwd()
 
 day0<- read.csv("WTDAY0-vs-KODAY0/SigDEGs.csv",header = T)
@@ -10,13 +12,24 @@ day3<- day3$ID
 day6<- read.csv("WTDAY6-vs-KODAY6/SigDEGs.csv",header = T)
 day6<- day6$ID
 
-library(VennDiagram)
-#library(BioVenn)
-#library(DescTools)
-#library(gplots)
-#library(nVennR)
-#PlotVenn(x=list(day0, day3, day6), labels = list("day0", "day3", "day6"))
-#biovenn <- draw.venn(day0, day3, day6, xtitle="Day0", ytitle="Day3", ztitle="Day6", t_c="#FFFFFF", subtitle="Venn Plot Day0, Day3, Day6", st_c="#FFFFFF", xt_c="#FFFFFF", yt_c="#FFFFFF", zt_c="#FFFFFF", nrtype="abs", nr_c="#FFFFFF", x_c="coral", y_c="coral", z_c="coral")
+lday0 <- list(day0)
+names(lday0) = " "
+lday3 <- list(day3)
+names(lday3) = "  "
+lday6 <- list(day6)
+names(lday6) = "   "
+
+png(file = "Venn.png", width = 1600, height = 1600, units = "px", res = 300)
+w <- Venn(Sets=c(lday0,lday3,lday6))
+plot(w)
+dev.off()
+
+diffday6 <- setdiff(day6,day0)
+diffday6 <- setdiff(diffday6,day3)
+write.csv(diffday6, "diffday6.csv",row.names = F)
+GOlist <- intersect(diffday6,day6)
+
+write.csv(GOlist, "Golist.csv",row.names = F)
 
 overrideTriple=T
 venn.plot <- venn.diagram(
@@ -35,13 +48,13 @@ venn.plot <- venn.diagram(
   resolution = 300,
   compression = 'lzw',
   units = 'px',
-  lwd = 6,
+  lwd = 1,
   lty = 'blank',
   fill = c('yellow', 'purple', 'green'),
-  cex = 3.5,
+  cex = 1,
   fontface = "bold",
   fontfamily = "sans",
-  cat.cex = 3,
+  cat.cex = 1,
   cat.fontface = "bold",
   cat.default.pos = "outer",
   cat.pos = c(-27, 27, 135),

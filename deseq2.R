@@ -7,9 +7,8 @@ library(dplyr)
 setwd("C:/Users/mikef/Dropbox (EinsteinMed)/Fei/Reverse/WTDAY0-vs-KODAY0")
 directory <- getwd()
 
-#comparison = "WTDAY0-vs-KODAY0"
-#refCond = sub("-vs-(.*)$", "", comparison)
-selectedCond = c("condition", "KODAY0", "WTDAY0")
+comparison = "WTDAY0-vs-KODAY0"
+refCond = sub("-vs-(.*)$", "", comparison)
 FC = 0
 negFC = FC*(-1)
 Pvalue = 0.05
@@ -52,12 +51,11 @@ if (anyNA(myCond$batch)){
   dds = DESeqDataSetFromMatrix(countMatrix, myCond, design = ~ batch + condition)
 }
 
-#dds$condition <- relevel(dds$condition, ref=refCond)
+dds$condition <- relevel(dds$condition, ref=refCond)
 dds <- dds[rowSums(counts(dds)) > 10 * dim(myCond)[1]]
 
 dds <- DESeq(dds)
-#res <- results(dds)
-res <- results(dds, contrast=selectedCond)
+res <- results(dds)
 res <- res[complete.cases(res),]
 res
 
@@ -96,5 +94,3 @@ SigDEGNormalizedCounts = SigDEGNormalizedCounts[SigDEGNormalizedCounts$ID != "",
 
 write.csv(DEGNormalizedCounts, file="DEGs.csv", row.names=F, quote=T)
 write.csv(SigDEGNormalizedCounts, file="SigDEGs.csv", row.names=F, quote=T)
-
-#plotMA(dds)
