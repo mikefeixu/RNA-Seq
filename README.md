@@ -9,4 +9,4 @@ a. Run Tophat_pipeline.sh \
 b. Run deseq2Tophat.R
 
 3. Data Visualization \
-a. Run BubblePlotGoTerm.R if GO_selected.xlsx is exported from DAVID
+a. Run BubblePlotGoTerm.R if GO.csv is downloaded and selected from DAVID
