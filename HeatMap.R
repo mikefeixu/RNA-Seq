@@ -9,8 +9,7 @@ BiocManager::install("ComplexHeatmap")
 
 setwd("") # Path to your work directory.
 
-directory <- getwd()
-
+# Get all DEGs list from different comparisons to create a combined heatmap for all samples.
 day0<- read.csv("WTDAY0-vs-KODAY0/SigDEGs.csv",header = T)
 day0<- day0$ID
 
