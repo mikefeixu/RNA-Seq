@@ -10,3 +10,4 @@ b. Run deseq2Tophat.R
 
 3. Data Visualization \
 a. Run BubblePlotGoTerm.R if GO.csv is downloaded and selected from DAVID
+b. Run HeatMap.R
