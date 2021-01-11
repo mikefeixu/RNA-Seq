@@ -4,7 +4,7 @@ library(DESeq2)
 library(gtools)
 library(dplyr)
 
-setwd("C:/Users/mikef/Dropbox (EinsteinMed)/Fei/Reverse/WTDAY0-vs-KODAY0")
+setwd("") # Path to your comparison folder: eg. "./WTDAY0-vs-KODAY0"
 directory <- getwd()
 
 comparison = "WTDAY0-vs-KODAY0"
