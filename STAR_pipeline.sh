@@ -49,8 +49,8 @@ trim_galore --paired $indir/${sample}_1.fq.gz $indir/${sample}_2.fq.gz -o $trimd
 echo "Finished trim_galore trimming"; date
 
 #Count reads
-zcat $indir/${sample}_1.fq.gz | echo $((`wc -l`/4)) > $statsdir/${sample}_raw.counts.txt
-zcat $trimdir/${sample}_val_1.fq.gz | echo $((`wc -l`/4)) > $statsdir/${sample}_trimmed.counts.txt
+zcat $indir/${sample}_1.fq.gz | echo $(($(wc -l)/4)) > $statsdir/${sample}_raw.counts.txt
+zcat $trimdir/${sample}_val_1.fq.gz | echo $(($(wc -l)/4)) > $statsdir/${sample}_trimmed.counts.txt
 echo "Finished counting of trimmed reads"; date
 
 # Mapping
@@ -63,6 +63,7 @@ samtools index $bamdir/${sample}.bam
 #infer_experiment.py -i ${sample}.bam -r mm10_RefSeq.bed
 
 # Feature Counts
+#If "gene_id" is preferred, using option "-g gene_id" instead. Same to other types of ids.
 featureCounts -a $gtf -o $hitcountsdir/${sample}.counts.txt --largestOverlap -t exon -g gene_name -s 0 -T 8 $bamdir/${sample}.bam
 sed -i "s|$bamdir/${sample}.bam|${sample}|g" $hitcountsdir/${sample}.counts.txt
 sed -i "s|transcript:||g" $hitcountsdir/${sample}.counts.txt

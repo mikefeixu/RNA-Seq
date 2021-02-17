@@ -41,8 +41,8 @@ echo "Started task ${SGE_TASK_ID} for sample: ${sample}"; date
 trim_galore --paired $indir/${sample}_1.clean.fq.gz $indir/${sample}_2.clean.fq.gz -o $trimdir/
 
 #Count reads
-zcat $indir/${sample}_1.clean.fq.gz | echo $((`wc -l`/4)) > $statsdir/${sample}_raw.counts.txt
-zcat $trimdir/${sample}_1.clean_val_1.fq.gz | echo $((`wc -l`/4)) > $statsdir/${sample}_trimmed.counts.txt
+zcat $indir/${sample}_1.clean.fq.gz | echo $(($(wc -l)/4)) > $statsdir/${sample}_raw.counts.txt
+zcat $trimdir/${sample}_1.clean_val_1.fq.gz | echo $(($(wc -l)/4)) > $statsdir/${sample}_trimmed.counts.txt
 
 echo "mapping..."; date
 # Map to genome
