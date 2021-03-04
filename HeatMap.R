@@ -52,34 +52,6 @@ pheatmap(as.matrix(data.m), border_color=NA, treeheight_row=0, scale="row",
          fontsize = 6, angle_col ="90", main="Heat Map of DEGs (Expression Z-Score)")
 dev.off()
 
-# Plot heatmap with package ComplexHeatmap
-colnames(CommonTPMCounts) = c("WT-1", "WT-2","KO-1","KO-2",
-                              "WT-1", "WT-2","KO-1","KO-2",
-                              "WT-1", "WT-2","KO-1","KO-2")
-da <- CommonTPMCounts
-data <- apply(da,1,function(x){as.numeric(x)})
-data <- t(data)
-data.m<-apply(data,1,scale)
-data.m<-t(data.m)
-colnames(data.m)<- colnames(da)
-rownames(data.m) <- rownames(da)
-
-data.m<-data.m[rev(row.names(data.m)),]
-
-ha0 = Heatmap(as.matrix(data.m),cluster_columns = FALSE,cluster_rows = TRUE,
-              name = " Z score",
-              row_dend_width = unit(12, "mm"), show_row_dend = FALSE,
-              row_names_gp=gpar(fontsize = 10, col=c(rep("red",1), rep("black",51))), 
-              row_title_gp = gpar(col = "black",fontsize = 8), show_row_names = FALSE,
-              show_column_names = TRUE, column_names_gp = gpar(cex=1.2, fontsize=10,col= "black"),
-              show_heatmap_legend = TRUE,column_names_side = "top",
-              heatmap_legend_param=list(color_bar = "continuous", title_position = "topcenter",
-                                        grid_height = unit(6, "mm"),grid_width = unit(4, "mm"),
-                                        labels_gp = gpar(fontsize = 11,col="black")))
-
-png(file = "SigDEGs_ComplexHeatmap.png", width = 1650, height = 1600, units = "px", res = 300)
-ha0
-dev.off()
 
 # Plot heatmap for selected genes from normalized counts.
 selected <- c("Pax6","Otx2","Fgf5","Nes",
@@ -135,31 +107,3 @@ pheatmap(as.matrix(data.m), border_color=0, treeheight_row=0, scale = "row",
          fontsize = 6, angle_col ="0", main=" ")
 dev.off()
 
-
-# Plot heatmap for selected genes with package ComplexHeatmap
-da0=read.table(file="Pluripotency_genes.txt",header=T,check.name=F,sep="\t",row.names=1)
-da0=da0[,c(3,4,5,6)]
-attach(da0)
-da <-da0
-rownames(da) <- rownames(da0)
-data <- apply(da,1,function(x){as.numeric(x)})
-data <- t(data)
-data.m<-apply(data,1,scale)
-data.m<-t(data.m)
-colnames(data.m)<- colnames(da)
-rownames(data.m) <- rownames(da)
-
-ha1 = Heatmap(as.matrix(data.m),cluster_columns = FALSE,cluster_rows = TRUE,
-              name = "Z score", clustering_method_rows = "average", clustering_distance_rows = "pearson",
-              row_dend_width = unit(12, "mm"),show_row_dend = FALSE,
-              row_names_gp=gpar(fontsize = 10,col=c(rep("red",1),rep("black",51))), 
-              row_title_gp = gpar(col = "black",fontsize = 8), show_row_names = FALSE,
-              show_column_names = TRUE, column_names_gp = gpar(cex=1.2, fontsize=10,col= "black"),
-              show_heatmap_legend = TRUE,column_names_side = "top",
-              heatmap_legend_param=list(color_bar = "continuous", title_position = "topcenter",
-                                        grid_height = unit(6, "mm"),grid_width = unit(4, "mm"),
-                                        labels_gp = gpar(fontsize = 11,col="black")))
-
-png(file = "EB6.png", width = 1650, height = 1600, units = "px", res = 300)
-ha1
-dev.off()
