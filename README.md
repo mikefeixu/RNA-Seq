@@ -8,12 +8,14 @@ RNA-Seq Piplines using Tophat or STAR
   - [Table of Contents](#table-of-contents)
     - [Overview](#running-the-pipeline)
     - [Build STAR Index](#build-star-index)
+    - [Download data](#download-data)
+    - [Run STAR pipeline](#run-star-pipeline)
   - [Report issues or feature requests](#report-issues-or-feature-requests)
 
 ### Overview
 
 - Prepare index and data:
-  - Build index
+  - Build STAR index
   - Download data
 - STAR Pipeline:
   - Run STAR_pipeline.sh on HPC environment
@@ -59,11 +61,73 @@ java -jar -Xmx16g /public/apps/picard/2.17.1/picard.jar CreateSequenceDictionary
 - Create STAR Index
 
 ```bash
+# If read length is 150, use 149 (150-1) for parameter --sjdbOverhang
 STAR --runThreadN 8 --runMode genomeGenerate --genomeDir . --genomeFastaFiles mm10.ERCC92.fa --sjdbGTFfile mm10.ERCC92.gtf --sjdbOverhang 149  --genomeChrBinNbits 18 --limitGenomeGenerateRAM 48524399488
+```
+
+#### Download data
+
+- Download published data with HPC environment.
+
+```bash
+# Config HPC settings in sra-download.sh. Make sure the task number equals to the sample number. (eg. -t 1~9 means 9 sampels for download)
+# Update the rename step accordingly for single ended data. Then submit the array jobs to HPC.
+
+qsub sra-download.sh
+
+# Check the download logs to ensure no transfer errors. Move downloaded data to indir in STAR_pipeline.sh after download jobs are completed.
+```
+
+#### Run STAR pipeline
+
+- Run STAR pipleine with HPC environment
+
+```bash
+# Config HPC settings in sra-download.sh. Make sure the task number equals to the sample number. eg. '-t 1~12' means 12 sampels for download; '-pe smp 8' means using 8 cores of parallel environment(pe) "smp". You need to change it to your pe.
+
+# Configure the directories in the job script. Especially for indir, genomedir, gtf, and RefSeqbed (RefSeqbed is used by infer_experiment.py(RSeQC) for checking library strand info)
+# sourcedir=$(pwd)
+# indir=$sourcedir/00_fastq
+# genomedir=<STAR4 directory>
+# gtf=$genomedir/mm10.gtf
+# RefSeqbed=$genomedir/mm10_RefSeq_Ensembl.bed
+
+qsub STAR_pipeline.sh
+
+# Check whethr the library is stranded and set the '-s 1'. Default is '-s 0' for non-stranded library.
+# infer_experiment.py -i ${sample}.bam -r mm10_RefSeq.bed
+# None Stranded data look like:
+# Reading reference gene model mm10_RefSeq.bed ... Done
+# Loading SAM/BAM file ...  Total 200000 usable reads were sampled
+# This is PairEnd Data
+# Fraction of reads failed to determine: 0.0212
+# Fraction of reads explained by "1++,1--,2+-,2-+": 0.4974
+# Fraction of reads explained by "1+-,1-+,2++,2--": 0.4814
+
+```
+
+#### Run fastqc and RSeQC
+
+- Run fastqc and RSeQC pipleine with HPC environment
+
+```bash
+# Config HPC settings in sra-download.sh. Make sure the task number equals to the sample number. eg. '-t 1~12' means 12 sampels for download; '-pe smp 8' means using 8 cores of parallel environment(pe) "smp". You need to change it to your pe.
+
+# Configure the directories in the job script. Especially for trimmdir, bamdir (generated or copied from STAR_pipeline.sh), genomedir, and RefSeqbed
+# sourcedir=$(pwd)
+# trimmdir=$sourcedir/00_fastq/trimmed
+# bamdir=$sourcedir/02_bam
+# genomedir=<STAR4 directory>
+# gtf=$genomedir/mm10.gtf
+# RefSeqbed=$genomedir/mm10_RefSeq_Ensembl.bed
+
+qsub RseQC.sh
+
+# Check fastqc and RseQC reports and figures in according folders.
 ```
 
 ### Report issues or feature requests
 
-- Open git repository link: [Issues and Feature Requests](https://github.com/mikefeixu/RNA-Seq/issues)
+- Open git repository link: [Issues and Feature](https://github.com/mikefeixu/RNA-Seq/issues)
 - Click "New Issue"
 - Enter the details and submit.

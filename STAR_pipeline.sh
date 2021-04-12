@@ -7,7 +7,7 @@
 #$ -S /bin/bash
 #$ -l h_vmem=8g
 #$ -l h_rt=20:00:00
-#$ -t 1-9
+#$ -t 1-10
 
 # Load modules from HPC
 module load cutadapt/1.8.3/python.2.7.8 #Needed by trim_galore
@@ -32,6 +32,7 @@ hitcountsdir=$sourcedir/hitcounts
 finalcountsdir=$sourcedir/finalcounts
 genomedir=/gs/gsfs0/users/xfei/ref/STAR4
 gtf=$genomedir/mm10.ERCC92.gtf
+RefSeqbed=$genomedir/mm10_RefSeq_Ensembl.bed
 
 mkdir -p $trimdir
 mkdir -p $mappingdir
@@ -60,7 +61,14 @@ samtools sort --threads 8 $mappingdir/${sample}Aligned.out.bam -m 1000000000 -o 
 samtools index $bamdir/${sample}.bam
 
 ##Check whethr the library is stranded***
-#infer_experiment.py -i ${sample}.bam -r mm10_RefSeq.bed
+infer_experiment.py -i ${sample}.bam -r $RefSeqbed
+# None Stranded data look like:
+# Reading reference gene model mm10_RefSeq.bed ... Done
+# Loading SAM/BAM file ...  Total 200000 usable reads were sampled
+# This is PairEnd Data
+# Fraction of reads failed to determine: 0.0212
+# Fraction of reads explained by "1++,1--,2+-,2-+": 0.4974
+# Fraction of reads explained by "1+-,1-+,2++,2--": 0.4814
 
 # Feature Counts
 #If "gene_id" is preferred, using option "-g gene_id" instead. Same to other types of ids.
