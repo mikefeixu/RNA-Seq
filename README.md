@@ -10,6 +10,7 @@ RNA-Seq Piplines using Tophat or STAR
     - [Build STAR Index](#build-star-index)
     - [Download data](#download-data)
     - [Run STAR pipeline](#run-star-pipeline)
+    - [Run fastqc and RSeQC](#run-fastqc-and-RSeQC)
   - [Report issues or feature requests](#report-issues-or-feature-requests)
 
 ### Overview
