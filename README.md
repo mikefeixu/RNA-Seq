@@ -22,9 +22,6 @@ RNA-Seq Piplines using Tophat or STAR
 - STAR Pipeline:
   - Run STAR_pipeline.sh on HPC environment
   - Run deseq2STAR.R
-- Tophat Pipeline:
-  - Run Tophat_pipeline.sh on HPC environment
-  - Run deseq2Tophat.R
 - Data Visualization:
   - Run BubblePlotGoTerm.R
   - Run HeatMap.R
