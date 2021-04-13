@@ -1,3 +1,7 @@
+# Uncomment below lines to install Vennerable.
+# Set project folder
+# Set significant DEGs files
+
 # if (!requireNamespace("BiocManager", quietly = TRUE))
 #   install.packages("BiocManager")
 # 
