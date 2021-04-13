@@ -27,6 +27,7 @@ RNA-Seq Piplines using Tophat or STAR
   - Run BubblePlotGoTerm.R
   - Run HeatMap.R
   - Run VennDiagram.R
+  - Run BarPlot.R
 
 #### Build STAR index locally
 
