@@ -1,13 +1,15 @@
 #!/usr/bin/Rscript
-
+# Config comparison and projectdir before running the script.
+# Create a folder for each comparion, add the counts files for samples from both groups to this folder
+# Add Conditions.txt to each comparion folder, and update sample, group, and batch info for according comparions. Leave batch info blank if no batch effect expected.
 library(DESeq2)
 library(gtools)
 library(dplyr)
 library(RColorBrewer)
 library(pheatmap)
-comparison <- "mESC_WT-vs-mESC_TKO"
-scriptdir <- "Your project DEG directory"
-workdir <- paste0(scriptdir, comparison)
+comparison <- "Your comparison" # Two groups connected by "-vs-": eg. "Control-vs-Treatment"
+projectdir <- "Your project DEG directory"
+workdir <- paste0(projectdir, comparison)
 setwd(workdir) # Path to your comparison folder: eg. "./WTDAY0-vs-KODAY0"
 
 refCond = sub("-vs-(.*)$", "", comparison)
