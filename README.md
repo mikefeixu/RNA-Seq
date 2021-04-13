@@ -12,6 +12,7 @@ RNA-Seq Piplines using Tophat or STAR
     - [Download data](#download-data)
     - [Run STAR pipeline](#run-star-pipeline)
     - [Run fastqc and RSeQC](#run-fastqc-and-RSeQC)
+    - [Run DEG Analysis](#run-deg-analysis)
   - [Report issues or feature requests](#report-issues-or-feature-requests)
 
 ### Overview
@@ -135,6 +136,32 @@ qsub STAR_pipeline.sh
 qsub RseQC.sh
 
 # Check fastqc and RseQC reports and figures in according folders.
+```
+
+#### Run DEG analysis
+
+- Run deseq2STAR.R
+
+```r
+# Config comparison and projectdir before running the script.
+# Create a folder for each comparion, add the counts files for samples from both groups to this folder
+# Add Conditions.txt to each comparion folder, and update sample, group, and batch info for according comparions. Leave batch info blank if no batch effect expected.
+# Install below packages if not installed
+# Recommend to run it in Rstudio
+# Run deseq2STAR.R for each comparison first, then run the R scripts in plots folder for BarPlot, BubblePlot, Heatmap, and VennDiagrams.
+# To included all samples in the PCA plot, run a pseduo comparison that includes all of the samples.
+
+library(DESeq2)
+library(gtools)
+library(dplyr)
+library(RColorBrewer)
+library(pheatmap)
+
+# deseq2STAR.R
+# VennDiagram.R
+# HeatMap.R
+# BarPlot.R
+# BubblePlotGOTerm.R
 ```
 
 ### Report issues or feature requests
