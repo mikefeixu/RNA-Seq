@@ -1,6 +1,8 @@
-# Adjust the commented lines to tune the plots to an acceptable outlook.
+# Adjust the commented lines to tune the plots to an acceptable outlook. 
+# Manual set the x-axis breaks/range by setting scale_x_continuous/xlim
 # Set project folder
-# Copy Selected_GO.tsv to GO folder, update with your selected GO Terms found from DAVID https://david.ncifcrf.gov/home.jsp
+# Copy Selected_GO.tsv to GO folder, update with your selected GO Terms found from 
+# DAVID https://david.ncifcrf.gov/home.jsp
 library(ggplot2)
 setwd("Path to your project folder")
 selected_GO_terms <- "GO/Selected_GO.tsv"
