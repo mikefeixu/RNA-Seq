@@ -30,12 +30,12 @@ sample=$(awk "NR==${SGE_TASK_ID}" $sourcedir/sample_list.txt)
 
 # FastQC
 echo "Started task ${SGE_TASK_ID} for sample: ${sample} FastQC";
-cd $trimmdir
+cd $trimmdir||exit
 fastqc $trimmdir/${sample}_val_1.fq.gz $trimmdir/${sample}_val_2.fq.gz;
 echo "Finished sample: ${sample} FastQC";
 
 # RSeQC
-cd $bamdir
+cd $bamdir||exit
 sample=$(awk "NR==${SGE_TASK_ID}" $sourcedir/sample_list.txt)
 echo "Started task ${SGE_TASK_ID} for sample: ${sample} RSeQC";
 clipping_profile.py -i ${sample}.bam -o $clipdir/${sample} -s PE

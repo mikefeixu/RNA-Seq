@@ -27,6 +27,7 @@ indir=$sourcedir/00_fastq
 trimdir=$sourcedir/00_fastq/trimmed
 mappingdir=$sourcedir/01_mapping
 outtmpdir=$sourcedir/01_mapping/tmp
+bamdir=$sourcedir/02_bam
 statsdir=$sourcedir/stats
 hitcountsdir=$sourcedir/hitcounts
 finalcountsdir=$sourcedir/finalcounts
@@ -37,6 +38,7 @@ RefSeqbed=$genomedir/mm10_RefSeq_Ensembl.bed
 mkdir -p $trimdir
 mkdir -p $mappingdir
 mkdir -p $outtmpdir
+mkdir -p $bamdir
 mkdir -p $statsdir
 mkdir -p $hitcountsdir
 mkdir -p $finalcountsdir
