@@ -1,0 +1,7 @@
+SampleID	condition	batch
+ControlA	Control	1
+ControlB	Control	2
+ControlC	Control	3
+TreatmentA	Treatment	1
+TreatmentB	Treatment	2
+TreatmentC	Treatment	3
