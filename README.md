@@ -7,7 +7,8 @@ RNA-Seq Piplines using Tophat or STAR
 - [RNA-Seq User Guide](#RNA-Seq-user-guide)
   - [Table of Contents](#table-of-contents)
     - [Overview](#running-the-pipeline)
-    - [Build STAR Index](#build-star-index)
+    - [Build STAR Index](#build-star-index-locally)
+    - [Build STAR Index on HPC](#build-star-index-on-HPC)
     - [Download data](#download-data)
     - [Run STAR pipeline](#run-star-pipeline)
     - [Run fastqc and RSeQC](#run-fastqc-and-RSeQC)
@@ -29,7 +30,7 @@ RNA-Seq Piplines using Tophat or STAR
   - Run HeatMap.R
   - Run VennDiagram.R
 
-#### Build STAR index
+#### Build STAR index locally
 
 - Download genome
 
@@ -64,6 +65,18 @@ java -jar -Xmx16g /public/apps/picard/2.17.1/picard.jar CreateSequenceDictionary
 ```bash
 # If read length is 150, use 149 (150-1) for parameter --sjdbOverhang
 STAR --runThreadN 8 --runMode genomeGenerate --genomeDir . --genomeFastaFiles mm10.ERCC92.fa --sjdbGTFfile mm10.ERCC92.gtf --sjdbOverhang 149  --genomeChrBinNbits 18 --limitGenomeGenerateRAM 48524399488
+```
+
+#### Build STAR index on HPC
+
+- Submit STAR_index.sh
+
+```bash
+# Config the genomedir
+# Update the genome and gtf file path for download
+qsub STAR_index.sh
+
+# Check the download logs to ensure no transfer errors. 
 ```
 
 #### Download data
