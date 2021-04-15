@@ -80,7 +80,7 @@ qsub STAR_index.sh
 
 #### Download data
 
-- Download published data with HPC environment.
+- Download published data with HPC environment. Download scripts and example are available at [SRA Download](https://github.com/mikefeixu/sra-download)
 
 ```bash
 # Config HPC settings in sra-download.sh. Make sure the task number equals to the sample number. (eg. -t 1~9 means 9 sampels for download)
@@ -104,6 +104,7 @@ qsub sra-download.sh
 # genomedir=<STAR4 directory>
 # gtf=$genomedir/mm10.gtf
 # RefSeqbed=$genomedir/mm10_RefSeq_Ensembl.bed
+# Add sample_list.txt to script directory and update it with sample names
 
 qsub STAR_pipeline.sh
 
@@ -145,7 +146,7 @@ qsub RseQC.sh
 
 ```r
 # Config comparison and projectdir before running the script.
-# Create a folder for each comparion, add the counts files for samples from both groups to this folder
+# Create a folder for each comparion, add the counts files (output of STAR_pipeline.sh) for samples from both groups to this folder
 # Add Conditions.txt to each comparion folder, and update sample, group, and batch info for according comparions. Leave batch info blank if no batch effect expected.
 # Install below packages if not installed
 # Recommend to run it in Rstudio

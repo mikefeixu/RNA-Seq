@@ -1,0 +1,12 @@
+ControlA1
+ControlA2
+ControlA3
+TreatmentA1
+TreatmentA2
+TreatmentA3
+ControlB1
+ControlB2
+ControlB3
+TreatmentB1
+TreatmentB2
+TreatmentB3
