@@ -159,6 +159,7 @@ library(dplyr)
 library(RColorBrewer)
 library(pheatmap)
 
+# Run below scripts in Rstudio
 # deseq2STAR.R
 # VennDiagram.R
 # HeatMap.R
