@@ -2,13 +2,15 @@
 # Config comparison and projectdir before running the script.
 # Create a folder for each comparion, add the counts files for samples from both groups to this folder
 # Add Conditions.txt to each comparion folder, and update sample, group, and batch info for according comparions. Leave batch info blank if no batch effect expected.
+# Add SelectedLabledGenes.csv to Selected_genes folder, and update it with the genes you want to lable in the MA plot and Volcano plot
 library(DESeq2)
 library(gtools)
 library(dplyr)
 library(RColorBrewer)
 library(pheatmap)
+library(ggplot2)
 comparison <- "Your comparison" # Two groups connected by "-vs-": eg. "Control-vs-Treatment"
-projectdir <- "Your project DEG directory"
+projectdir <- "Your project DEG directory" # Please use "/" or "\\" in the directory
 workdir <- paste0(projectdir, comparison)
 setwd(workdir) # Path to your comparison folder: eg. "./WTDAY0-vs-KODAY0"
 
