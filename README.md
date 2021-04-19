@@ -148,6 +148,7 @@ qsub RseQC.sh
 # Config comparison and projectdir before running the script.
 # Create a folder for each comparion, add the counts files (output of STAR_pipeline.sh) for samples from both groups to this folder
 # Add Conditions.txt to each comparion folder, and update sample, group, and batch info for according comparions. Leave batch info blank if no batch effect expected.
+# Add SelectedLabledGenes.csv to Selected_genes folder, and update it with the genes you want to lable in the MA plot and Volcano plot
 # Install below packages if not installed
 # Recommend to run it in Rstudio
 # Run deseq2STAR.R for each comparison first, then run the R scripts in plots folder for BarPlot, BubblePlot, Heatmap, and VennDiagrams.
@@ -158,6 +159,7 @@ library(gtools)
 library(dplyr)
 library(RColorBrewer)
 library(pheatmap)
+library(ggplot2)
 
 # Run below scripts in Rstudio
 # deseq2STAR.R
