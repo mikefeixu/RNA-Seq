@@ -67,7 +67,7 @@ samtools sort --threads 8 $mappingdir/${sample}Aligned.out.bam -m 1000000000 -o 
 samtools index $bamdir/${sample}.bam
 
 ##Check whethr the library is stranded***
-infer_experiment.py -i ${sample}.bam -r $RefSeqbed
+infer_experiment.py -i $bamdir/${sample}.bam -r $RefSeqbed
 # None Stranded data look like:
 # Reading reference gene model mm10_RefSeq.bed ... Done
 # Loading SAM/BAM file ...  Total 200000 usable reads were sampled
