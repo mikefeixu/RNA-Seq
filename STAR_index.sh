@@ -35,4 +35,4 @@ java -jar -Xmx16g /public/apps/picard/2.17.1/picard.jar CreateSequenceDictionary
 
 # Create STAR Index
 # If read length is 150, use 149 (150-1) for parameter --sjdbOverhang
-STAR --runThreadN 8 --runMode genomeGenerate --genomeDir $genomedir --genomeFastaFiles mm10.ERCC92.fa --sjdbGTFfile $gtf --sjdbOverhang 149  --genomeChrBinNbits 18 --limitGenomeGenerateRAM 48524399488
+STAR --runThreadN 8 --runMode genomeGenerate --genomeDir $genomedir --genomeFastaFiles mm10.fa --sjdbGTFfile $gtf --sjdbOverhang 149  --genomeChrBinNbits 18 --limitGenomeGenerateRAM 48524399488
