@@ -31,8 +31,8 @@ bamdir=$sourcedir/02_bam
 statsdir=$sourcedir/stats
 hitcountsdir=$sourcedir/hitcounts
 finalcountsdir=$sourcedir/finalcounts
-genomedir=/gs/gsfs0/users/xfei/ref/STAR4
-gtf=$genomedir/mm10.ERCC92.gtf
+genomedir="Your STAR Index Directory"
+gtf=$genomedir/mm10_no_rRNA.gtf
 RefSeqbed=$genomedir/mm10_RefSeq_Ensembl.bed
 
 mkdir -p $trimdir
@@ -47,17 +47,21 @@ mkdir -p $finalcountsdir
 sample=$(awk "NR==${SGE_TASK_ID}" $sourcedir/sample_list.txt)
 echo "Started task ${SGE_TASK_ID} for ${sample} "; date
 
-# Trim raw data
+# Trim raw data, for single ended data use commented lines: 
+# trim_galore $indir/${sample}.fastq.gz -o $trimdir/ --basename ${sample}
 trim_galore --paired $indir/${sample}_1.fq.gz $indir/${sample}_2.fq.gz -o $trimdir/ --basename ${sample}
 echo "Finished trim_galore trimming"; date
 
 #Count reads
+# zcat $indir/${sample}.fastq.gz | echo $(($(wc -l)/4)) > $statsdir/${sample}_raw.counts.txt
 zcat $indir/${sample}_1.fq.gz | echo $(($(wc -l)/4)) > $statsdir/${sample}_raw.counts.txt
+# zcat $trimdir/${sample}_trimmed.fq.gz | echo $(($(wc -l)/4)) > $statsdir/${sample}_trimmed.counts.txt
 zcat $trimdir/${sample}_val_1.fq.gz | echo $(($(wc -l)/4)) > $statsdir/${sample}_trimmed.counts.txt
 echo "Finished counting of trimmed reads"; date
 
 # Mapping
 echo "Start mapping... for sample ${sample}"; date
+# STAR --runThreadN 8 --genomeDir $genomedir --readFilesIn $trimdir/${sample}_trimmed.fq.gz --readFilesCommand zcat --outFileNamePrefix $mappingdir/${sample} --outSAMtype BAM Unsorted --outReadsUnmapped Fastx --outTmpDir $outtmpdir/${sample}
 STAR --runThreadN 8 --genomeDir $genomedir --readFilesIn $trimdir/${sample}_val_1.fq.gz $trimdir/${sample}_val_2.fq.gz --readFilesCommand zcat --outFileNamePrefix $mappingdir/${sample} --outSAMtype BAM Unsorted --outReadsUnmapped Fastx --outTmpDir $outtmpdir/${sample}
 samtools sort --threads 8 $mappingdir/${sample}Aligned.out.bam -m 1000000000 -o $bamdir/${sample}.bam
 samtools index $bamdir/${sample}.bam
