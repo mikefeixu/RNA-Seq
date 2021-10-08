@@ -18,6 +18,7 @@ module load picard
 module load STAR
 module load subread/1.5.0-p1/gcc.4.4.7
 module load RSeQC/2.6.4/python.2.7.8
+module load HTSeq
 
 echo This is task $SGE_TASK_ID
 
@@ -34,6 +35,8 @@ finalcountsdir=$sourcedir/finalcounts
 genomedir="Your STAR Index Directory"
 gtf=$genomedir/mm10_no_rRNA.gtf
 RefSeqbed=$genomedir/mm10_RefSeq_Ensembl.bed
+exonhitcountsdir=$sourcedir/exonhitcounts
+DEXseq_ann=$genomedir/mm10_featurecounts.gtf
 
 mkdir -p $trimdir
 mkdir -p $mappingdir
@@ -42,7 +45,7 @@ mkdir -p $bamdir
 mkdir -p $statsdir
 mkdir -p $hitcountsdir
 mkdir -p $finalcountsdir
-
+mkdir -p $exonhitcountsdir
 # Get sample name from sample_list.txt
 sample=$(awk "NR==${SGE_TASK_ID}" $sourcedir/sample_list.txt)
 echo "Started task ${SGE_TASK_ID} for ${sample} "; date
@@ -82,3 +85,8 @@ featureCounts -a $gtf -o $hitcountsdir/${sample}.counts.txt --largestOverlap -t 
 sed -i "s|$bamdir/${sample}.bam|${sample}|g" $hitcountsdir/${sample}.counts.txt
 sed -i "s|transcript:||g" $hitcountsdir/${sample}.counts.txt
 tail -n +2 $hitcountsdir/${sample}.counts.txt > $finalcountsdir/${sample}.counts.txt
+
+#Count Exon for DEXseq analysis
+featureCounts -f -O -s 0 -p -T 8 -F GTF -t exon -a ${DEXseq_ann} -o $exonhitcountsdir/${sample}.temp.counts.txt $bamdir/${sample}.bam
+sed -i 's|$bamdir/${sample}.bam|${sample}|g' $exonhitcountsdir/${sample}.temp.counts.txt
+tail -n +2 $exonhitcountsdir/${sample}.temp.counts.txt > $exonhitcountsdir/${sample}.counts.txt

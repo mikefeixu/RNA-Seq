@@ -9,6 +9,7 @@ library(dplyr)
 library(RColorBrewer)
 library(pheatmap)
 library(ggplot2)
+library(ggpubr)
 comparison <- "Your comparison" # Two groups connected by "-vs-": eg. "Control-vs-Treatment"
 projectdir <- "Your project DEG directory" # Please use "/" or "\\" in the directory
 workdir <- paste0(projectdir, comparison)
@@ -127,7 +128,6 @@ dev.off()
 
 # MA plots
 # For help: https://github.com/kassambara/ggpubr/issues/70
-library(ggpubr)
 res<-res[order(res$padj, decreasing = T),]
 
 # Get list of Genes for labling 
